@@ -1,0 +1,139 @@
+rm -rf git-ex-status && mkdir git-ex-status && cd git-ex-status
+git init
+
+echo 'print("hello")' > app.py
+git status
+
+# Stage everything
+git add .
+git status
+
+# First commit
+git commit -m "init commit"
+git status
+
+# Make a change and commit with -a (stage tracked files automatically)
+echo 'print("v2")' >> app.py
+git commit -a -m "append v2"
+git status
+
+
+rm -rf git-ex-revert && mkdir git-ex-revert && cd git-ex-revert
+git init
+echo "1" > a.txt && git add . && git commit -m "init"
+echo "2" >> a.txt && git commit -am "2nd"
+echo "3" >> a.txt && git commit -am "3rd"
+echo "4" >> a.txt && git commit -am "4th"
+
+git log --graph --pretty=oneline --abbrev-commit
+
+# Copy the short SHA of the commit you want to undo (e.g., "3rd") and revert it:
+# Example (replace <sha-of-3rd>):
+git revert <sha-of-3rd> --no-edit
+git log --graph --pretty=oneline --abbrev-commit
+
+
+# Start fresh
+rm -rf git-ex-remote && mkdir git-ex-remote && cd git-ex-remote
+git init
+echo hi > a.txt
+git add a.txt && git commit -m "first"
+
+# Add a remote (replace URL with your repo URL)
+git remote add origin https://github.com/<your-user>/<your-repo>.git
+
+# Push current branch (main) and set upstream
+git branch -M main
+git push -u origin main
+
+# (Optional) Demonstrate cloning into a new folder
+cd ..
+git clone https://github.com/<your-user>/<your-repo>.git cloned-repo
+
+
+
+# Create a clean playground
+rm -rf git-ex-setup && mkdir git-ex-setup && cd git-ex-setup
+
+# Initialize a repo
+git init
+
+# Configure identity (global = for all repos on this machine)
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# Inspect config at different scopes
+git config --list
+git config --global --list
+git config --local --list
+git config --system --list    # may require admin
+git config user.name
+git config user.email
+git config --show-origin --list
+
+
+#Conflict
+mkdir merge-issue
+cd merge-issue
+git init
+echo “hello” > a.txt
+git add .
+git commit -am "init commit"
+git branch new-branch
+
+
+git checkout new-branch
+echo “world” > a.txt
+Git add .
+git commit -am "I want to conflict"
+git checkout master
+echo “newer change in master” > a.txt
+Git add .
+Git commit -am “34rd commit” 
+git merge new-branch
+Cat a.txt
+
+#Class exercise
+
+git init
+git status
+echo 1 > 1.txt
+git add .
+git commit -m "initial commit"
+git log --graph --oneline --all
+echo 2 > 1.txt
+git add .
+git commit -m "2nd"
+git log --graph --oneline --all
+git checkout -b purple
+git log --graph --oneline --all
+echo 3 > 1.txt
+git add .
+git commit -m "3rd"
+git log --graph --oneline --all
+echo 4 > 1.txt
+git add .
+git commit -m "4th"
+git log --graph --oneline --all
+git checkout main
+echo 5 > 1.txt
+git add .
+git commit -m "5th"
+git log --graph --oneline --all
+echo 6 > 1.txt
+git add .
+git commit -m "6th"
+git checkout -b green
+echo 7 > 1.txt
+git add .
+git commit -m "7th"
+echo 8 > 1.txt
+git add .
+git commit -m "9th"
+git checkout main
+echo 9 > 1.txt
+git commit -m "9th-1"
+git add .
+git commit -m "9th-1"
+git log --graph --oneline --all
+
