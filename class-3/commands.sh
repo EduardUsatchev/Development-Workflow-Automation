@@ -101,6 +101,11 @@ kubectl apply -f https://raw.githubusercontent.com/EduardUsatchev/k8s-demo/refs/
 kubectl apply -f https://raw.githubusercontent.com/EduardUsatchev/k8s-demo/refs/heads/master/volumes/daemonset.yaml
 
 
+#HELM
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm install my-nginx bitnami/nginx \
+  --set service.type=NodePort
 # test
 new pycharm project called DevOps2402
 right click on the project and "Open In" , "Terminal"

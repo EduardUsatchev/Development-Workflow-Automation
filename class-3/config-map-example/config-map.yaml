@@ -15,3 +15,4 @@ data:
     color.good=purple
     color.bad=yellow
     allow.textmode=true
+    devops.class=intel
