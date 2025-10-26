@@ -1,0 +1,23 @@
+replicaCount: 2
+
+image:
+  repository: flask-demo
+  tag: "1"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 5000
+  # nodePort: null   # set only when type=NodePort
+
+probes:
+  path: /moshe
+  initialReadinessDelay: 3
+  readinessPeriod: 5
+  initialLivenessDelay: 10
+  livenessPeriod: 10
+
+resources: {}
+podLabels: {}
+podAnnotations: {}

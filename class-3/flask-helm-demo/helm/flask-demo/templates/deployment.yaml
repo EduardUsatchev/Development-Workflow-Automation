@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "flask-demo.fullname" . }}
+  labels:
+    {{- include "flask-demo.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "flask-demo.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "flask-demo.fullname" . }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: flask
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: FLASK_APP
+              value: "app.py"
+            - name: FLASK_RUN_HOST
+              value: "0.0.0.0"
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.probes.path }}
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: {{ .Values.probes.initialReadinessDelay }}
+            periodSeconds: {{ .Values.probes.readinessPeriod }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.probes.path }}
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: {{ .Values.probes.initialLivenessDelay }}
+            periodSeconds: {{ .Values.probes.livenessPeriod }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          command: ["flask", "run", "--port", "{{ .Values.service.targetPort }}"]

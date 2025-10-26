@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ed-nginx
+  namespace: vol-demo
+  labels:
+    app: ed-nginx
+spec:
+  volumes:
+    - name: www
+      emptyDir: {}          # use medium: Memory for tmpfs
+  initContainers:
+    - name: init-site
+      image: busybox:1.36
+      command: ["/bin/sh","-c"]
+      args:
+        - |
+          echo "Hello from emptyDir at $(date)" > /workdir/index.html
+      volumeMounts:
+        - name: www
+          mountPath: /workdir
+  containers:
+    - name: nginx
+      image: nginx:1.27-alpine
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html

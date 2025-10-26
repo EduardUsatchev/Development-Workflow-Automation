@@ -1,0 +1,6 @@
+apiVersion: v2
+name: flask-demo
+description: Flask demo app (moshe/edi) templated with Helm
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
