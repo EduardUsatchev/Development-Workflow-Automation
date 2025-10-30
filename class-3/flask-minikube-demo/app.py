@@ -10,6 +10,9 @@ def edi():
     return "Hello from edi!"
 
 
+@app.get("/ping")
+def ping():
+    return "PONG"
 
 
 if __name__ == '__main__':
