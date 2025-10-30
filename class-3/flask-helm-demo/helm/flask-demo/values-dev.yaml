@@ -1,6 +1,23 @@
-replicaCount: 1
+replicaCount:
+
+image:
+  repository: flask-demo
+  tag: "1"
+  pullPolicy: IfNotPresent
+
 service:
-  type: NodePort
+  type: ClusterIP
   port: 80
   targetPort: 5000
-  # nodePort: 30081   # uncomment to force a specific NodePort
+  # nodePort: null   # set only when type=NodePort
+
+probes:
+  path: /ping
+  initialReadinessDelay: 3
+  readinessPeriod: 5
+  initialLivenessDelay: 10
+  livenessPeriod: 10
+
+resources: {}
+podLabels: {}
+podAnnotations: {}
