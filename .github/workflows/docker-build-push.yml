@@ -47,7 +47,7 @@ jobs:
           file: class-3/flask-minikube-demo/Dockerfile
           push: true
           tags: |
-            workflow-automation/flask-minikube-demo:latest
-            workflow-automation/flask-minikube-demo:${{ steps.meta.outputs.SHA_SHORT }}
+            a18ab77c4b90/workflow-automation:latest
+            a18ab77c4b90/workflow-automation:${{ steps.meta.outputs.SHA_SHORT }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
