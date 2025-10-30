@@ -46,6 +46,7 @@ jobs:
           context: class-3/flask-minikube-demo
           file: class-3/flask-minikube-demo/Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: |
             a18ab77c4b90/workflow-automation:latest
             a18ab77c4b90/workflow-automation:${{ steps.meta.outputs.SHA_SHORT }}
